@@ -71,7 +71,7 @@ async def list(l, m):
     )
     
     
-@StreamBot.on_message(filters.regex("ping📡"))
+@StreamBot.on_message(filters.regex("Ping 📡"))
 async def ping(b, m):
     start_t = time.time()
     ag = await m.reply_text("....")
@@ -82,7 +82,7 @@ async def ping(b, m):
     
     
     
-@StreamBot.on_message(filters.private & filters.regex("status📊"))
+@StreamBot.on_message(filters.private & filters.regex("Status 📊"))
 async def stats(bot, update):
   currentTime = readable_time((time.time() - StartTime))
   total, used, free = shutil.disk_usage('.')
@@ -94,13 +94,15 @@ async def stats(bot, update):
   cpuUsage = psutil.cpu_percent(interval=0.5)
   memory = psutil.virtual_memory().percent
   disk = psutil.disk_usage('/').percent
-  botstats = f'<b>Bot Uptime:</b> {currentTime}\n' \
-            f'<b>Total disk space:</b> {total}\n' \
-            f'<b>Used:</b> {used}  ' \
-            f'<b>Free:</b> {free}\n\n' \
-            f'📊Data Usage📊\n<b>Upload:</b> {sent}\n' \
-            f'<b>Down:</b> {recv}\n\n' \
-            f'<b>CPU:</b> {cpuUsage}% ' \
-            f'<b>RAM:</b> {memory}% ' \
-            f'<b>Disk:</b> {disk}%'
+  botstats = f'<b>🥱 Bot Uptime:</b> {currentTime}\n\n' \
+            f'<b>📈 Data Usage:</b>\n<b>- Upload:</b> {sent}\n' \
+            f'<b>- Down:</b> {recv}\n\n' \
+            f'<b>💾 Disk Info:</b>\n' \
+            f'<b>- Total disk space:</b> {total}\n' \
+            f'<b>- Used:</b> {used}\n' \
+            f'<b>- Free:</b> {free}\n\n' \
+            f'<b>🖥️ System Info:</b>\n' \
+            f'<b>- CPU:</b> {cpuUsage}%\n' \
+            f'<b>- RAM:</b> {memory}%\n' \
+            f'<b>- Disk:</b> {disk}%\n'
   await update.reply_text(botstats)

@@ -40,7 +40,7 @@ async def start(b, m):
         await db.add_user(m.from_user.id)
         await b.send_message(
             Var.BIN_CHANNEL,
-            f"**Nᴇᴡ Usᴇʀ Jᴏɪɴᴇᴅ:** \n\n__Mʏ Nᴇᴡ Fʀɪᴇɴᴅ__ [{m.from_user.first_name}](tg://user?id={m.from_user.id}) __Sᴛᴀʀᴛᴇᴅ Yᴏᴜʀ Bᴏᴛ !!__"
+            f"**✅ New user joined:**\n\n**📛 Name: [{m.from_user.first_name}](tg://user?id={m.from_user.id})** Started your bot !!"
         )
     if Var.UPDATES_CHANNEL != "None":
         try:
@@ -75,9 +75,9 @@ async def start(b, m):
                 parse_mode="HTML",
                 disable_web_page_preview=True)
             return
-    await StreamBot.send_photo(
+    await StreamBot.send_animation(
         chat_id=m.chat.id,
-        photo ="https://telegra.ph/file/ca10e459bc6f48a4ad0f7.jpg",
+        animation ="https://media.giphy.com/media/EqrIrilix4ysLpavlm/giphy.gif",
         caption =f'Hi {m.from_user.mention(style="md")}!,\nI am Telegram File to Link Generator Bot with Channel support.\nSend me any file and get a direct download link and streamable link.!',
         reply_markup=buttonz)
 
@@ -88,7 +88,7 @@ async def help_handler(bot, message):
         await db.add_user(message.from_user.id)
         await bot.send_message(
             Var.BIN_CHANNEL,
-            f"**Nᴇᴡ Usᴇʀ Jᴏɪɴᴇᴅ **\n\n__Mʏ Nᴇᴡ Fʀɪᴇɴᴅ__ [{message.from_user.first_name}](tg://user?id={message.from_user.id}) __Started Your Bot !!__"
+            f"**✅ New user joined:**\n\n**📛 Name: [{message.from_user.first_name}](tg://user?id={message.from_user.id})** Started your bot !!"
         )
     if Var.UPDATES_CHANNEL != "None":
         try:

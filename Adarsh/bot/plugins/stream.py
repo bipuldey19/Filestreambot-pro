@@ -59,7 +59,7 @@ async def private_receive_handler(c: Client, m: Message):
         await db.add_user(m.from_user.id)
         await c.send_message(
             Var.BIN_CHANNEL,
-            f"Nᴇᴡ Usᴇʀ Jᴏɪɴᴇᴅ : \n\n Nᴀᴍᴇ : [{m.from_user.first_name}](tg://user?id={m.from_user.id}) Sᴛᴀʀᴛᴇᴅ Yᴏᴜʀ Bᴏᴛ !!"
+            f"✅ New user joined: \n\n📛 Name: [{m.from_user.first_name}](tg://user?id={m.from_user.id}) Started your bot !!"
         )
     if Var.UPDATES_CHANNEL != "None":
         try:
@@ -90,7 +90,7 @@ async def private_receive_handler(c: Client, m: Message):
             await m.reply_text(e)
             await c.send_message(
                 chat_id=m.chat.id,
-                text="**Sᴏᴍᴇᴛʜɪɴɢ ᴡᴇɴᴛ Wʀᴏɴɢ. Cᴏɴᴛᴀᴄᴛ ᴍʏ ʙᴏss** @agprojects",
+                text="**🆘 Something went wrong. Contact the maintainer:** @bipuldey19",
                 parse_mode="markdown",
                 disable_web_page_preview=True)
             return
@@ -105,29 +105,27 @@ async def private_receive_handler(c: Client, m: Message):
         
 
         msg_text ="""
-<b>✅ Link successfully generated!</b>
+<b>📂 File Name:</b> <i>{}</i>
 
-<b>📂 File Name:</b> {}
-
-<b>📦 File Size:</b> {}
+<b>📦 File Size:</b> <i>{}</i>
 
 <b>📥 Download Link:</b> <code>{}</code>
 
-<b>🖥 Stream Link:</b> <code>{}</code>"""
+<b>📺 Stream Link:</b> <code>{}</code>"""
 
-        await log_msg.reply_text(text=f"**RᴇQᴜᴇꜱᴛᴇᴅ ʙʏ :** [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n**Uꜱᴇʀ ɪᴅ :** `{m.from_user.id}`\n**Stream ʟɪɴᴋ :** {stream_link}", disable_web_page_preview=True, parse_mode="Markdown", quote=True)
+        await log_msg.reply_text(text=f"**✅ Requested by:**\n\n**- Name:** [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n**- UserID:** `{m.from_user.id}`\n**- Download Link:** {online_link}\n**- Stream Link:** {stream_link}", disable_web_page_preview=True, parse_mode="Markdown", quote=True)
         await m.reply_text(
             text=msg_text.format(get_name(log_msg), humanbytes(get_media_file_size(m)), online_link, stream_link),
             parse_mode="HTML", 
             quote=True,
             disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🖥 Stream", url=stream_link), #Stream Link
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("📺 Stream", url=stream_link), #Stream Link
                                                 InlineKeyboardButton('Download 📥', url=online_link)]]) #Download Link
         )
     except FloodWait as e:
         print(f"Sleeping for {str(e.x)}s")
         await asyncio.sleep(e.x)
-        await c.send_message(chat_id=Var.BIN_CHANNEL, text=f"Gᴏᴛ FʟᴏᴏᴅWᴀɪᴛ ᴏғ {str(e.x)}s from [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n\n**𝚄𝚜𝚎𝚛 𝙸𝙳 :** `{str(m.from_user.id)}`", disable_web_page_preview=True, parse_mode="Markdown")
+        await c.send_message(chat_id=Var.BIN_CHANNEL, text=f"⛔ Got floodwait of {str(e.x)}s from [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n\n**🆔 User Id:** `{str(m.from_user.id)}`", disable_web_page_preview=True, parse_mode="Markdown")
 
 
 @StreamBot.on_message(filters.channel & ~filters.group & (filters.document | filters.video | filters.photo) & ~filters.edited & ~filters.forwarded, group=-1)
@@ -149,7 +147,7 @@ async def channel_receive_handler(bot, broadcast):
         stream_link = f"{Var.URL}watch/{quote_plus(get_name(log_msg))}/{str(log_msg.message_id)}?hash={get_hash(log_msg)}"
         online_link = f"{Var.URL}{quote_plus(get_name(log_msg))}/{str(log_msg.message_id)}?hash={get_hash(log_msg)}"
         await log_msg.reply_text(
-            text=f"**Cʜᴀɴɴᴇʟ Nᴀᴍᴇ:** `{broadcast.chat.title}`\n**Cʜᴀɴɴᴇʟ ID:** `{broadcast.chat.id}`\n**Rᴇǫᴜᴇsᴛ ᴜʀʟ:** {stream_link}",
+            text=f"**🚩 Channel Name:** `{broadcast.chat.title}`\n**🆔 Channel ID:** `{broadcast.chat.id}`\n**🔗 Request URL:** {stream_link}",
             quote=True,
             parse_mode="Markdown"
         )
@@ -158,7 +156,7 @@ async def channel_receive_handler(bot, broadcast):
             message_id=broadcast.message_id,
             reply_markup=InlineKeyboardMarkup(
                 [
-                    [InlineKeyboardButton("🖥 Stream ", url=stream_link),
+                    [InlineKeyboardButton("📺 Stream ", url=stream_link),
                      InlineKeyboardButton('Download 📥', url=online_link)] 
                 ]
             )
@@ -167,8 +165,8 @@ async def channel_receive_handler(bot, broadcast):
         print(f"Sleeping for {str(w.x)}s")
         await asyncio.sleep(w.x)
         await bot.send_message(chat_id=Var.BIN_CHANNEL,
-                             text=f"Gᴏᴛ FʟᴏᴏᴅWᴀɪᴛ ᴏғ {str(w.x)}s from {broadcast.chat.title}\n\n**Cʜᴀɴɴᴇʟ ID:** `{str(broadcast.chat.id)}`",
+                             text=f"⛔ Got floodwait of {str(w.x)}s from {broadcast.chat.title}\n\n**🆔 Channel ID:** `{str(broadcast.chat.id)}`",
                              disable_web_page_preview=True, parse_mode="Markdown")
     except Exception as e:
-        await bot.send_message(chat_id=Var.BIN_CHANNEL, text=f"**#ᴇʀʀᴏʀ_ᴛʀᴀᴄᴇʙᴀᴄᴋ:** `{e}`", disable_web_page_preview=True, parse_mode="Markdown")
-        print(f"Cᴀɴ'ᴛ Eᴅɪᴛ Bʀᴏᴀᴅᴄᴀsᴛ Mᴇssᴀɢᴇ!\nEʀʀᴏʀ:  **Give me edit permission in updates and bin Chanell{e}**")
+        await bot.send_message(chat_id=Var.BIN_CHANNEL, text=f"**#Error_Traceback:** `{e}`", disable_web_page_preview=True, parse_mode="Markdown")
+        print(f"📛 Can't edit broadcast message!\nEʀʀᴏʀ:  **Give me edit permission in updates and bin Chanell{e}**")
