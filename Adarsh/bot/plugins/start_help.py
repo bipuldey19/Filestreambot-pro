@@ -16,8 +16,8 @@ from pyrogram.types import ReplyKeyboardMarkup
 if MY_PASS:
             buttonz=ReplyKeyboardMarkup(
             [
-                ["start⚡️","help📚","login🔑","DC"],
-                ["follow❤️","ping📡","status📊","maintainers😎"]
+                ["Start ⚡️","Help 🆘","Login 🔑"],
+                ["Ping 📡","Status 📊"]
                         
             ],
             resize_keyboard=True
@@ -25,8 +25,8 @@ if MY_PASS:
 else:
             buttonz=ReplyKeyboardMarkup(
             [
-                ["start⚡️","help📚","DC"],
-                ["follow❤️","ping📡","status📊","maintainers😎"]
+                ["Start ⚡️","Help 🆘"],
+                ["Ping 📡","Status 📊",]
                         
             ],
             resize_keyboard=True
@@ -34,7 +34,7 @@ else:
 
             
             
-@StreamBot.on_message((filters.command("start") | filters.regex('start⚡️')) & filters.private & ~filters.edited)
+@StreamBot.on_message((filters.command("start") | filters.regex('Start ⚡️')) & filters.private & ~filters.edited)
 async def start(b, m):
     if not await db.is_user_exist(m.from_user.id):
         await db.add_user(m.from_user.id)
@@ -82,7 +82,7 @@ async def start(b, m):
         reply_markup=buttonz)
 
 
-@StreamBot.on_message((filters.command("help") | filters.regex('help📚')) & filters.private & ~filters.edited)
+@StreamBot.on_message((filters.command("help") | filters.regex('Help 🆘')) & filters.private & ~filters.edited)
 async def help_handler(bot, message):
     if not await db.is_user_exist(message.from_user.id):
         await db.add_user(message.from_user.id)
@@ -125,13 +125,7 @@ async def help_handler(bot, message):
             return
     await message.reply_text(
         text="""<b> Send me any file or video i will give you streamable link and download link.</b>\n
-<b> I also support Channels, add me to you Channel and send any media files and see miracle✨ also send /list to know all commands""",
+<b> I also support Channels, add me to you Channel and send any media files and see miracle✨""",
         parse_mode="HTML",
         disable_web_page_preview=True,
-        reply_markup=InlineKeyboardMarkup(
-            [
-                [InlineKeyboardButton("💁‍♂️ DEV", url="https://t.me/agprojects")],
-                [InlineKeyboardButton("💥 FOLLOW", url="https://GitHub.com/adarsh-goel")]
-            ]
-        )
     )
